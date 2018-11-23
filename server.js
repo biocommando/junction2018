@@ -1,33 +1,21 @@
 const express = require('express');
+const apiCalls = require('./api-calls');
 const app = express();
-const https = require('https');
 const port = 3000;
-const userAndPassword = process.env.JUNCTION2018CREDENTIALS;
-const options = {
-    host: 'junctionev.enstoflow.com',
-    //port: 443,
-    path: '/api/v1/chargingPointGroup',
-    // authentication headers
-    headers: {
-       'Authorization': 'Basic ' + Buffer.from(userAndPassword).toString('base64')
-    }   
- };
-https.get(options, (resp) => {
-  let data = '';
 
-  // A chunk of data has been recieved.
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
+const chargingPointGroups = '/api/v1/chargingPointGroup';
+const chargingPointGroupWithId = id => chargingPointGroups + '/' + id;
+const chargingPointWithName = name => '/api/v1/chargingPoint/' + name;
+const configuration = name => chargingPointWithName(name) + '/configuration';
 
-  // The whole response has been received. Print out the result.
-  resp.on('end', () => {
-    console.log(JSON.parse(data));
-  });
-
-}).on("error", (err) => {
-  console.log("Error: " + err.message);
-});
+apiCalls.post(
+    '/api/v1/statistic/transaction/search',
+    {
+        startDate: ['2018-11-21'],
+        endDate: ['2018-11-23'],
+     },
+     console.log
+);
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
