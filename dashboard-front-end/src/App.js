@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
-import mockResponse from './responseData.json';
 import Header from './components/Header';
 import Body from './components/Body';
 import Footer from './components/Footer';
@@ -11,6 +10,7 @@ import ExampleChart from './components/ExampleChart';
 
 class App extends Component {
   state = {
+    currentTime: '',
     planets: [],
     myData: [
       {id: '00036', y: 200400, x: 1504121437},
@@ -31,8 +31,14 @@ class App extends Component {
     ],
   }
 
-  fetchData(){
+  setTime(){
+    const date = new Date()
+    const timeOptions = {hour: '2-digit', minute:'2-digit', second:'2-digit'}
+    const currentTime = date.toLocaleTimeString([], timeOptions)
 
+    this.setState({
+      currentTime: currentTime
+    })
   }
 
   componentDidMount(){
@@ -42,18 +48,19 @@ class App extends Component {
     //   const planets = res.data.results;
     //   this.setState({ planets });
     // })
-    this.setState({ planets: mockResponse.results }); // mock data set state
+    
+    window.setInterval(function () {
+      this.setTime()
+    }.bind(this), 1000)
   }
 
   
 
   render() {
-    const { planets, myData } = this.state;
-
+    const { myData, currentTime } = this.state;
     return (
       <div className="App">
-        <Header />
-        {console.log(planets)}
+        <Header currentTime={currentTime} />
         <Body>
           <ExampleChart myData={myData}/>
           <ExampleChart myData={myData}/>
@@ -62,7 +69,6 @@ class App extends Component {
         </Body>
         <Footer />
       </div>
-      
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  FlexibleWidthXYPlot,
   XYPlot,
   XAxis,
   YAxis,
@@ -20,18 +21,17 @@ const ExampleChart = (props) => {
     {max: -Infinity, min: Infinity}
   );
   return (
-    <div>
-      <XYPlot
+    <div className='grid-container'>
+      <FlexibleWidthXYPlot
+        height={300}
         margin={{left: 75}}
         xType="time"
-        width={300}
-        height={300}
         yDomain={[yDomain.min, yDomain.max]}
       >
         <BarSeries className="barChart" data={myData} />
         <XAxis style={axisStyle}/>
         <YAxis style={axisStyle}/>
-      </XYPlot>
+      </FlexibleWidthXYPlot>
     </div>
   )
 }
