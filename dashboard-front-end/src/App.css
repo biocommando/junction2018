@@ -1,0 +1,17 @@
+body {
+  background: #171819;
+  color: #d8d9da;
+}
+
+body, h1, h5 {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+:root {
+  --edgePadding: 10vw;
+}

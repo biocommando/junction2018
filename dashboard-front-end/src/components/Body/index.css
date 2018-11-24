@@ -1,0 +1,7 @@
+.Body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto-fill, min-content);
+  grid-gap: 1em;
+  padding: 1em var(--edgePadding);
+}
