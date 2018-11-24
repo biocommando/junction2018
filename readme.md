@@ -1,3 +1,4 @@
+![Peakachu Logo](https://github.com/biocommando/junction2018/blob/master/peakachu.png)
 # Peakachu
 > Electrifying the local grid! - Pikachuuuuuuuuuuuuuuuuu!
 
