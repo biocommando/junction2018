@@ -12,6 +12,26 @@ const configuration = name => chargingPointWithName(name) + '/configuration';
 
 const availableChargingConnections = [];
 let chargePointStatuses = [];
+let powerStatus = {
+    maxLoad: 100,
+    baseLoad: 20,
+    heatingLoad: 30,
+    evLoad: 20
+};
+let heatingDevices = [
+    {
+        id: 'house1',
+        load: 10,
+        temperature: 20,
+        status: 'active'
+    },
+    {
+        id: 'house2',
+        load: 0,
+        temperature: 24,
+        status: 'inactive'
+    }
+]
 
 apiCalls.get(chargingPointGroups, data => {
     data.forEach(d => availableChargingConnections.push(...d.chargingPoints));
@@ -29,8 +49,14 @@ apiCalls.get(chargingPointGroups, data => {
 
 //app.get('/', (req, res) => res.send('Hello World!'));
 app.use(express.static('static'));
-app.get('/api/statuses', (req, res) => {
+app.get('/api/connector-status', (req, res) => {
     res.send(chargePointStatuses);
+});
+app.get('/api/power-status', (req, res) => {
+    res.send(powerStatus);
+});
+app.get('/api/heating-status', (req, res) => {
+    res.send(heatingDevices);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

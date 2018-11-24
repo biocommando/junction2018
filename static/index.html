@@ -21,6 +21,6 @@ const request = (method, url, body, onReady, onError) => {
     }
 }
 
-request('GET', '/api/statuses', undefined, statuses => document.body.innerHTML = '<pre>' + JSON.stringify(statuses, null, 2));
+request('GET', '/api/power-status', undefined, statuses => document.body.innerHTML = '<pre>' + JSON.stringify(statuses, null, 2));
 
 </script>
