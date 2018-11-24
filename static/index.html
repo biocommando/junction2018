@@ -1,0 +1,26 @@
+<script>
+const request = (method, url, body, onReady, onError) => {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                onReady && onReady(JSON.parse(xhttp.responseText));
+            } else {
+                onError && onError(this.status, JSON.parse(xhttp.responseText))
+            }
+        }
+    };
+    xhttp.timeout = 1000;
+    if (method === 'GET') {
+        xhttp.open("GET", url + (body ? '?' + Object.keys(body).map(key => key + '=' + body[key]).join('&') : ''), true);
+        xhttp.send();
+    } else {
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(body));
+    }
+}
+
+request('GET', '/api/statuses', undefined, statuses => document.body.innerHTML = '<pre>' + JSON.stringify(statuses, null, 2));
+
+</script>

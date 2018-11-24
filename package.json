@@ -5,6 +5,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "firebase": "^5.5.9"
   }
 }
