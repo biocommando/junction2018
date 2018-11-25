@@ -7,7 +7,7 @@ import {
 } from 'react-vis';
 
 const StackedAreaChart = (props) => {
-  const { appliances, heat, ev, colors } = props;
+  const { dataSets, colors } = props;
   const axisStyle = {fill:'#d8d9da'};
   const yDomainMax = 160
   return (
@@ -19,12 +19,15 @@ const StackedAreaChart = (props) => {
         xType="time"
         yDomain={[0, yDomainMax]}
       >
-        <AreaSeries
-          data={appliances}
-          color={colors.appliances}
-          opacity={0.4}
-        />
-        <AreaSeries
+        {Object.keys(dataSets).map(key =>
+          <AreaSeries
+            data={dataSets[key]}
+            color={colors[key]}
+            opacity={0.4}
+          />
+        )}
+
+        {/* <AreaSeries
           data={heat}
           color={colors.heat}
           opacity={0.4}
@@ -33,7 +36,7 @@ const StackedAreaChart = (props) => {
           data={ev}
           color={colors.ev}
           opacity={0.4}
-        />
+        /> */}
         <XAxis style={axisStyle}/>
         <YAxis style={axisStyle}/>
       </FlexibleWidthXYPlot>
