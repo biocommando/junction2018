@@ -72,7 +72,6 @@ class App extends Component {
           <div>
             <div>Electrical Heating</div>
             <StackedAreaChart maxValue={maxLoad} dataSets={{heat, balancing}} colors={colors} />
-            {/* <ExampleChart myData={heat} color={colors.heat} /> */}
           </div>
           <div>
             <div>Electrical Vehicle Charging</div>
@@ -81,7 +80,6 @@ class App extends Component {
           <div>
             <div>Total Power</div>
             <StackedAreaChart maxValue={maxLoad} dataSets={{appliances, heat, ev}} colors={colors} />
-            {/* <StackedAreaChart appliances={appliances} heat={heat} ev={ev} colors={colors} /> */}
           </div>
         </Body>
         <Footer />
