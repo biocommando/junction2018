@@ -97,6 +97,7 @@ const calculateNonCompensatedPowerLevel = () => {
             evs.push(powerData[key].data[idx]);
         }
     });
+    const temp = powerData['Air temperature'].data[idx];
     let hload = hdemands.reduce((a, b) => a + b);
     let eload = edemands.reduce((a, b) => a + b);
     let evload = evs.reduce((a, b) => a + b);
@@ -122,7 +123,8 @@ const calculateNonCompensatedPowerLevel = () => {
             heat: hreduction,
             ev: evreduction
         },
-        free: maxLoad - wholeLoad
+        free: maxLoad - wholeLoad,
+        temp
     });
     history = history.filter(historyEntry => historyEntry.time.getTime() > time.getTime() - hoursOfData * 60 * 60 * 1000);
 };
