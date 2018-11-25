@@ -21,6 +21,7 @@ const StackedAreaChart = (props) => {
       >
         {Object.keys(dataSets).map(key =>
           <AreaSeries
+            key={`key-dataSet-${key}`}
             data={dataSets[key]}
             color={colors[key]}
             opacity={0.4}

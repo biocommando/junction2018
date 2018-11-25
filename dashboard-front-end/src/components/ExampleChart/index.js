@@ -3,7 +3,6 @@ import {
   FlexibleWidthXYPlot,
   XAxis,
   YAxis,
-  VerticalBarSeries,
   LineSeries,
   AreaSeries,
 } from 'react-vis';
@@ -12,7 +11,7 @@ const ExampleChart = (props) => {
   const { myData, color } = props;
   const axisStyle = {fill:'#d8d9da'};
   // const BarSeries = VerticalBarSeries;
-  const yDomainMax = props.maxValue + 10;
+  const yDomainMax = props.maxValue;
 
   return (
     <div className='grid-container'>
