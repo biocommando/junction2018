@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Body from './components/Body';
 import Footer from './components/Footer';
 import ExampleChart from './components/ExampleChart';
+import StackedAreaChart from './components/StackedAreaChart';
 const getData = callback => fetch('http://localhost:3001/api/history', { mode: 'cors' }).then(response => response.json().then(callback));
 
 class App extends Component {
@@ -45,26 +46,31 @@ class App extends Component {
 
   render() {
     const { appliances, heat, ev, balancing } = this.state;
+    const colors = {
+      appliances: "#ffeb3b",
+      heat: "#f44336",
+      ev: "#4caf50",
+    }
     return (
       <div className="App">
         <Header />
         <Body>
           <div>
             <div>Electrical Appliances</div>
-            <ExampleChart myData={appliances} />
+            <ExampleChart myData={appliances} color={colors.appliances} />
           </div>
 
           <div>
             <div>Electrical Heating</div>
-            <ExampleChart myData={heat} />
+            <ExampleChart myData={heat} color={colors.heat} />
           </div>
           <div>
             <div>Electrical Vehicle Charging</div>
-            <ExampleChart myData={ev} />
+            <ExampleChart myData={ev} color={colors.ev} />
           </div>
           <div>
-            <div>Balanced Power</div>
-            <ExampleChart myData={balancing} />
+            <div>Total Power</div>
+            <StackedAreaChart appliances={appliances} heat={heat} ev={ev} colors={colors} />
           </div>
         </Body>
         <Footer />

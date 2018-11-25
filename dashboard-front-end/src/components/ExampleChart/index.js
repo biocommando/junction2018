@@ -1,34 +1,44 @@
 import React from 'react';
 import {
   FlexibleWidthXYPlot,
-  XYPlot,
   XAxis,
   YAxis,
   VerticalBarSeries,
+  LineSeries,
+  AreaSeries,
 } from 'react-vis';
 
 const ExampleChart = (props) => {
-  const { myData } = props;
+  const { myData, color } = props;
   const axisStyle = {fill:'#d8d9da'};
-  const BarSeries = VerticalBarSeries;
-  const yDomain = myData.reduce(
-    (res, row) => {
-      return {
-        max: Math.max(res.max, row.y),
-        min: Math.min(res.min, row.y)
-      };
-    },
-    {max: -Infinity, min: Infinity}
-  );
+  // const BarSeries = VerticalBarSeries;
+  const yDomainMax = 160;
+
   return (
     <div className='grid-container'>
       <FlexibleWidthXYPlot
         height={300}
         margin={{left: 75}}
         xType="time"
-        yDomain={[yDomain.min, yDomain.max]}
+        yDomain={[0, yDomainMax]}
       >
-        <BarSeries className="barChart" data={myData} />
+        <AreaSeries
+          curve={null}
+          data={myData}
+          opacity={0.4}
+          strokeStyle="solid"
+          color={color}
+          style={{}}
+        />
+        <LineSeries
+          curve={null}
+          data={myData}
+          opacity={1}
+          stroke={color}
+          strokeStyle="solid"
+          color={color}
+          style={{fill: "none"}}
+        />
         <XAxis style={axisStyle}/>
         <YAxis style={axisStyle}/>
       </FlexibleWidthXYPlot>
