@@ -34,10 +34,15 @@ class App extends Component {
           appliances: data.map(d => createData(d, 'appliances')),
           heat: data.map(d => createData(d, 'heat')),
           ev: data.map(d => createData(d, 'ev')),
-          balancing: data.map(d => ({
+          balancingHeat: data.map(d => ({
             id: d.time,
             x: new Date(d.time).getTime(),
-            y: d.balancingData.heat + d.balancingData.ev
+            y: d.balancingData.heat
+          })),
+          balancingEv: data.map(d => ({
+            id: d.time,
+            x: new Date(d.time).getTime(),
+            y: d.balancingData.ev
           })),
         });
       });
@@ -53,12 +58,13 @@ class App extends Component {
 
 
   render() {
-    const { appliances, heat, ev, balancing, maxLoad } = this.state;
+    const { appliances, heat, ev, balancingHeat, balancingEv, maxLoad } = this.state;
     const colors = {
       appliances: "#900c3f",
       heat: "#c70039",
       ev: "#ff5733",
-      balancing: "#ffc305",
+      balancingEv: "#ffc305",
+      balancingHeat: "#ffc305",
     }
     return (
       <div className="App">
@@ -71,12 +77,12 @@ class App extends Component {
 
           <div>
             <div>Electrical Heating</div>
-            <StackedAreaChart maxValue={maxLoad} dataSets={{heat, balancing}} colors={colors} />
+            <StackedAreaChart maxValue={maxLoad} dataSets={{heat, balancingHeat}} colors={colors} />
             {/* <ExampleChart myData={heat} color={colors.heat} /> */}
           </div>
           <div>
             <div>Electrical Vehicle Charging</div>
-            <ExampleChart maxValue={maxLoad} myData={ev} color={colors.ev} />
+            <StackedAreaChart maxValue={maxLoad} dataSets={{ev, balancingEv}} colors={colors} />
           </div>
           <div>
             <div>Total Power</div>
