@@ -1,91 +1,19 @@
 const express = require('express');
-const apiCalls = require('./api-calls');
 const fs = require('fs');
 const app = express();
-const port = 3000;
-
-/*const chargingPointGroups = '/api/v1/chargingPointGroup';
-const chargingPointGroupWithId = id => chargingPointGroups + '/' + id;
-const chargingPointWithName = name => '/api/v1/chargingPoint/' + name;
-const configuration = name => chargingPointWithName(name) + '/configuration';
-const targetTemperature = 23;
-const minTemperature = 20;
-
-let availableChargingConnections = [];
-let chargePointStatuses = [];
-let powerStatus = {
-    maxLoad: 100,
-    baseLoad: 20,
-    heatingLoad: 30,
-    evLoad: 20
-};
-let heatingDevices = [
-    {
-        id: 'house1',
-        load: 10,
-        temperature: 20,
-        status: 'active'
-    },
-    {
-        id: 'house2',
-        load: 0,
-        temperature: 24,
-        status: 'inactive'
-    }
-]
-
-setInterval(updateData, 5000);
-
-function updateData() {
-    apiCalls.get(chargingPointGroups, data => {
-        availableChargingConnections = [];
-        data.forEach(d => availableChargingConnections.push(...d.chargingPoints));
-        //console.log(availableChargingConnections);
-        const connectors = [];
-        availableChargingConnections.forEach(cp => connectors.push(...cp.connectors))
-        //console.log(connectors);
-        chargePointStatuses = connectors.map(connector => ({
-            connector: connector.chargingPointIdentifier + '#' + connector.connectorId,
-            status: connector.status,
-            power: connector.status === 'Charging' ? Math.random() * 5 : 0,
-            chargedRatio: connector.status === 'Charging' ? Math.random() : 0
-        }));
-        calculatePriorities();
-    });
-}
-
-
-function calculatePriorities() {
-    heatingDevices.forEach(d => {
-        d.priority = 1 - (d.temperature - minTemperature) / (targetTemperature - minTemperature);
-    });
-    chargePointStatuses.forEach(point => {
-        point.priority = point.status === 'Charging' ? 1 - point.chargedRatio : -999
-    })
-}
-
-//app.get('/', (req, res) => res.send('Hello World!'));
-app.use(express.static('static'));
-app.get('/api/connector-status', (req, res) => {
-    res.send(chargePointStatuses);
-});
-app.get('/api/power-status', (req, res) => {
-    res.send(powerStatus);
-});
-app.get('/api/heating-status', (req, res) => {
-    res.send(heatingDevices);
-});*/
+const port = 3001;
 
 const powerData = {};
 let maxLoad = 150;
 let time = 0;
 let timeProgressSpeed = 100; // millis per 15 minutes
-const history = [];
+let history = [];
 
 const progressTime = () => {
     time = new Date(time.getTime() + 60000 * 15);
     if (time.getTime() >= powerData.Time.data[powerData.Time.data.length - 1].getTime() - 3600000) {
         time = powerData.Time.data[0];
+        history = [];
     }
     calculateNonCompensatedPowerLevel();
     setTimeout(progressTime, timeProgressSpeed);
@@ -176,15 +104,23 @@ const calculateNonCompensatedPowerLevel = () => {
     });
 };
 
+const setCorsHdrs = res => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+};
+
 app.get('/api/measurements', (req, res) => {
+    setCorsHdrs(res);
     res.send(history[history.length - 1]);
 })
 
 app.get('/api/history', (req, res) => {
+    setCorsHdrs(res);
     res.send(history);
 })
 
 app.get('/api/param', (req, res) => {
+    setCorsHdrs(res);
     if (req.query.maxLoad) {
         maxLoad = Number(req.query.maxLoad);
     }
@@ -194,6 +130,10 @@ app.get('/api/param', (req, res) => {
     res.send({ maxLoad, timeProgressSpeed });
 })
 
-app.get('/api/time', (req, res) => res.send({ time: time.getTime() }));
+app.get('/api/time', (req, res) => {
+    setCorsHdrs(res);
+    res.send({ time: time.getTime() })
+});
 
+app.use(express.static('static'));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

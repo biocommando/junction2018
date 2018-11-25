@@ -1,71 +1,71 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
-
 import Header from './components/Header';
 import Body from './components/Body';
 import Footer from './components/Footer';
 import ExampleChart from './components/ExampleChart';
-
+const getData = callback => fetch('http://localhost:3001/api/history', { mode: 'cors' }).then(response => response.json().then(callback));
 
 class App extends Component {
   state = {
-    currentTime: '',
-    planets: [],
-    myData: [
-      {id: '00036', y: 200400, x: 1504121437},
-      {id: '00036', y: 200350, x: 1504121156},
-      {id: '00036', y: 200310, x: 1504120874},
-      {id: '00036', y: 200260, x: 1504120590},
-      {id: '00036', y: 200210, x: 1504120306},
-      {id: '00036', y: 200160, x: 1504120024},
-      {id: '00036', y: 200120, x: 1504119740},
-      {id: '00036', y: 200070, x: 1504119458},
-      {id: '00036', y: 200020, x: 1504119177},
-      {id: '00036', y: 199980, x: 1504118893},
-      {id: '00036', y: 199930, x: 1504118611},
-      {id: '00036', y: 199880, x: 1504118330},
-      {id: '00036', y: 199830, x: 1504118048},
-      {id: '00036', y: 199790, x: 1504117763},
-      {id: '00036', y: 199740, x: 1504117481}
-    ],
+    appliances: [],
+    heat: [],
+    ev: [],
+    balancing: []
   }
 
-  setTime(){
-    const date = new Date()
-    const timeOptions = {hour: '2-digit', minute:'2-digit', second:'2-digit'}
-    const currentTime = date.toLocaleTimeString([], timeOptions)
+  componentDidMount() {
 
-    this.setState({
-      currentTime: currentTime
-    })
-  }
+    const createData = (dataPoint, key) => {
+      return {
+        id: dataPoint.time,
+        x: new Date(dataPoint.time).getTime(),
+        y: dataPoint[key]
+      };
+    };
 
-  componentDidMount(){
-    //initial data fetch
-    // axios.get(`https://swapi.co/api/planets`)
-    // .then(res => {
-    //   const planets = res.data.results;
-    //   this.setState({ planets });
-    // })
-    
     window.setInterval(function () {
-      this.setTime()
+      getData(data => {
+        data = data.filter(d => new Date(d.time).getTime() > new Date(data[data.length - 1].time).getTime() - 24 * 60 * 60 * 1000)
+        this.setState({
+          appliances: data.map(d => createData(d, 'appliances')),
+          heat: data.map(d => createData(d, 'heat')),
+          ev: data.map(d => createData(d, 'ev')),
+          balancing: data.map(d => ({
+            id: d.time,
+            x: new Date(d.time).getTime(),
+            y: d.balancingData.heat + d.balancingData.ev
+          })),
+        });
+      });
     }.bind(this), 1000)
   }
 
-  
+
 
   render() {
-    const { myData, currentTime } = this.state;
+    const { appliances, heat, ev, balancing } = this.state;
     return (
       <div className="App">
-        <Header currentTime={currentTime} />
+        <Header />
         <Body>
-          <ExampleChart myData={myData}/>
-          <ExampleChart myData={myData}/>
-          <ExampleChart myData={myData}/>
-          <ExampleChart myData={myData}/>
+          <div>
+            <div>Electrical Appliances</div>
+            <ExampleChart myData={appliances} />
+          </div>
+
+          <div>
+            <div>Electrical Heating</div>
+            <ExampleChart myData={heat} />
+          </div>
+          <div>
+            <div>Electrical Vehicle Charging</div>
+            <ExampleChart myData={ev} />
+          </div>
+          <div>
+            <div>Balanced Power</div>
+            <ExampleChart myData={balancing} />
+          </div>
         </Body>
         <Footer />
       </div>
