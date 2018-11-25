@@ -6,17 +6,39 @@ const port = 3001;
 const powerData = {};
 let maxLoad = 150;
 let time = 0;
-let timeProgressSpeed = 100; // millis per 15 minutes
+let timeProgressSpeed = 1500; // millis per 15 minutes
+const ffDate = process.argv.find(arg => arg.indexOf('fastforwardto=') === 0);
+const fastForwardTo = ffDate ? new Date(ffDate.split('=')[1].replace('_', ' ')) : new Date(0);
+const enableFastForward = !!ffDate;
+if (enableFastForward) {
+    console.log(`Fastforward enabled. Fastforwarding to ${fastForwardTo}.`);
+}
+const hoursOfData = 6;
 let history = [];
 
 const progressTime = () => {
-    time = new Date(time.getTime() + 60000 * 15);
+    if (enableFastForward) {
+        const realTime = time.getTime() > fastForwardTo.getTime();
+        time = new Date(time.getTime() + (realTime ? 1000 : 60000 * 15));
+    } else {
+        time = new Date(time.getTime() + 60000 * 15);
+    }
     if (time.getTime() >= powerData.Time.data[powerData.Time.data.length - 1].getTime() - 3600000) {
         time = powerData.Time.data[0];
         history = [];
     }
-    calculateNonCompensatedPowerLevel();
-    setTimeout(progressTime, timeProgressSpeed);
+    if (enableFastForward) {
+        calculateNonCompensatedPowerLevel();
+        const realTime = time.getTime() > fastForwardTo.getTime();
+        if (realTime) {
+            setTimeout(progressTime, 1000);
+        } else {
+            setTimeout(progressTime, 1);
+        }
+    } else {
+        calculateNonCompensatedPowerLevel();
+        setTimeout(progressTime, timeProgressSpeed);
+    }
 };
 
 
@@ -55,7 +77,7 @@ fs.readFile('Junction power.csv', (err, data) => {
 const calculateNonCompensatedPowerLevel = () => {
     const minutes = time.getMinutes();
     const timeWoMinutes = new Date(time.getTime() - 60000 * minutes);
-    const idx = powerData.Time.data.findIndex(date => Math.abs(timeWoMinutes.getTime() - date.getTime()) < 1000);
+    const idx = powerData.Time.data.findIndex(date => Math.abs(timeWoMinutes.getTime() - date.getTime()) < 1000 * 60);
     //const interpolationRatio = minutes / 60;
 
     const hdemands = [];
@@ -103,11 +125,12 @@ const calculateNonCompensatedPowerLevel = () => {
         },
         free: maxLoad - wholeLoad
     });
+    history = history.filter(historyEntry => historyEntry.time.getTime() > time.getTime() - hoursOfData * 60 * 60 * 1000);
 };
 
 const setCorsHdrs = res => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 };
 
 app.get('/api/measurements', (req, res) => {
@@ -137,4 +160,4 @@ app.get('/api/time', (req, res) => {
 });
 
 app.use(express.static('static'));
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`PEAKachu server running on port ${port}!`));
