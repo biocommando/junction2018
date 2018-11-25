@@ -12,7 +12,7 @@ const ExampleChart = (props) => {
   const { myData, color } = props;
   const axisStyle = {fill:'#d8d9da'};
   // const BarSeries = VerticalBarSeries;
-  const yDomainMax = 160;
+  const yDomainMax = props.maxValue + 10;
 
   return (
     <div className='grid-container'>

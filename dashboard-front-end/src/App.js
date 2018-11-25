@@ -6,13 +6,15 @@ import Footer from './components/Footer';
 import ExampleChart from './components/ExampleChart';
 import StackedAreaChart from './components/StackedAreaChart';
 const getData = callback => fetch('http://localhost:3001/api/history', { mode: 'cors' }).then(response => response.json().then(callback));
+const getParams = callback => fetch('http://localhost:3001/api/param', { mode: 'cors' }).then(response => response.json().then(callback));
 
 class App extends Component {
   state = {
     appliances: [],
     heat: [],
     ev: [],
-    balancing: []
+    balancing: [],
+    maxLoad: 150
   }
 
   componentDidMount() {
@@ -40,16 +42,23 @@ class App extends Component {
         });
       });
     }.bind(this), 1000)
+
+    window.setInterval(function () {
+      getParams(params => {
+        this.setState({maxLoad: params.maxLoad});
+      });
+    }.bind(this), 5000)
   }
 
 
 
   render() {
-    const { appliances, heat, ev, balancing } = this.state;
+    const { appliances, heat, ev, balancing, maxLoad } = this.state;
     const colors = {
-      appliances: "#5f44f2",
-      heat: "#5581c1",
-      ev: "#6eb49c",
+      appliances: "#d8ba00",
+      heat: "#f0c200",
+      ev: "#ffce00",
+      balancing: "#ffd860",
     }
     return (
       <div className="App">
@@ -57,21 +66,21 @@ class App extends Component {
         <Body>
           <div>
             <div>Electrical Appliances</div>
-            <ExampleChart myData={appliances} color={colors.appliances} />
+            <ExampleChart maxValue={maxLoad} myData={appliances} color={colors.appliances} />
           </div>
 
           <div>
             <div>Electrical Heating</div>
-            <StackedAreaChart dataSets={{heat, balancing}} colors={colors} />
+            <StackedAreaChart maxValue={maxLoad} dataSets={{heat, balancing}} colors={colors} />
             {/* <ExampleChart myData={heat} color={colors.heat} /> */}
           </div>
           <div>
             <div>Electrical Vehicle Charging</div>
-            <ExampleChart myData={ev} color={colors.ev} />
+            <ExampleChart maxValue={maxLoad} myData={ev} color={colors.ev} />
           </div>
           <div>
             <div>Total Power</div>
-            <StackedAreaChart dataSets={{appliances, heat, ev}} colors={colors} />
+            <StackedAreaChart maxValue={maxLoad} dataSets={{appliances, heat, ev}} colors={colors} />
             {/* <StackedAreaChart appliances={appliances} heat={heat} ev={ev} colors={colors} /> */}
           </div>
         </Body>
