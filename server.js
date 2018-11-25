@@ -19,7 +19,7 @@ let history = [];
 const progressTime = () => {
     if (enableFastForward) {
         const realTime = time.getTime() > fastForwardTo.getTime();
-        time = new Date(time.getTime() + (realTime ? 1000 : 60000 * 15));
+        time = new Date(time.getTime() + (realTime ? 1000 : 60000 * 1));
     } else {
         time = new Date(time.getTime() + 60000 * 15);
     }

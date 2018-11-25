@@ -6,13 +6,15 @@ import Footer from './components/Footer';
 import ExampleChart from './components/ExampleChart';
 import StackedAreaChart from './components/StackedAreaChart';
 const getData = callback => fetch('http://localhost:3001/api/history', { mode: 'cors' }).then(response => response.json().then(callback));
+const getParams = callback => fetch('http://localhost:3001/api/param', { mode: 'cors' }).then(response => response.json().then(callback));
 
 class App extends Component {
   state = {
     appliances: [],
     heat: [],
     ev: [],
-    balancing: []
+    balancing: [],
+    maxLoad: 150
   }
 
   componentDidMount() {
@@ -40,12 +42,18 @@ class App extends Component {
         });
       });
     }.bind(this), 1000)
+
+    window.setInterval(function () {
+      getParams(params => {
+        this.setState({maxLoad: params.maxLoad});
+      });
+    }.bind(this), 5000)
   }
 
 
 
   render() {
-    const { appliances, heat, ev, balancing } = this.state;
+    const { appliances, heat, ev, balancing, maxLoad } = this.state;
     const colors = {
       appliances: "#ffeb3b",
       heat: "#f44336",
@@ -57,20 +65,20 @@ class App extends Component {
         <Body>
           <div>
             <div>Electrical Appliances</div>
-            <ExampleChart myData={appliances} color={colors.appliances} />
+            <ExampleChart maxValue={maxLoad} myData={appliances} color={colors.appliances} />
           </div>
 
           <div>
             <div>Electrical Heating</div>
-            <ExampleChart myData={heat} color={colors.heat} />
+            <ExampleChart maxValue={maxLoad} myData={heat} color={colors.heat} />
           </div>
           <div>
             <div>Electrical Vehicle Charging</div>
-            <ExampleChart myData={ev} color={colors.ev} />
+            <ExampleChart maxValue={maxLoad} myData={ev} color={colors.ev} />
           </div>
           <div>
             <div>Total Power</div>
-            <StackedAreaChart appliances={appliances} heat={heat} ev={ev} colors={colors} />
+            <StackedAreaChart maxValue={maxLoad} appliances={appliances} heat={heat} ev={ev} colors={colors} />
           </div>
         </Body>
         <Footer />
