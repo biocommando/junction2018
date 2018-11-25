@@ -6,9 +6,9 @@ const port = 3001;
 const powerData = {};
 let maxLoad = 150;
 let time = 0;
-let timeProgressSpeed = 1500; // millis per 15 minutes
+let timeProgressSpeed = 500; // millis per 15 minutes
 const ffDate = process.argv.find(arg => arg.indexOf('fastforwardto=') === 0);
-const fastForwardTo = ffDate ? new Date(ffDate.split('=')[1].replace('_', ' ')) : new Date(0);
+const fastForwardTo = ffDate ? new Date(ffDate.split('=')[1].replace('_', ' ')) : undefined;
 const enableFastForward = !!ffDate;
 if (enableFastForward) {
     console.log(`Fastforward enabled. Fastforwarding to ${fastForwardTo}.`);
@@ -78,7 +78,6 @@ const calculateNonCompensatedPowerLevel = () => {
     const minutes = time.getMinutes();
     const timeWoMinutes = new Date(time.getTime() - 60000 * minutes);
     const idx = powerData.Time.data.findIndex(date => Math.abs(timeWoMinutes.getTime() - date.getTime()) < 1000 * 60);
-    //const interpolationRatio = minutes / 60;
 
     const hdemands = [];
     Object.keys(powerData).forEach(key => {
@@ -151,7 +150,7 @@ app.get('/api/param', (req, res) => {
     if (req.query.speed) {
         timeProgressSpeed = Number(req.query.speed);
     }
-    res.send({ maxLoad, timeProgressSpeed });
+    res.send({ maxLoad, timeProgressSpeed, enableFastForward });
 })
 
 app.get('/api/time', (req, res) => {
