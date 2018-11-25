@@ -47,9 +47,9 @@ class App extends Component {
   render() {
     const { appliances, heat, ev, balancing } = this.state;
     const colors = {
-      appliances: "#ffeb3b",
-      heat: "#f44336",
-      ev: "#4caf50",
+      appliances: "#5f44f2",
+      heat: "#5581c1",
+      ev: "#6eb49c",
     }
     return (
       <div className="App">
