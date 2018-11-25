@@ -110,7 +110,7 @@ const calculateNonCompensatedPowerLevel = () => {
     }
     wholeLoad = hload + eload + evload;
     if (wholeLoad > maxLoad) {
-        evreduction = Math.min(evload, wholeLoad - evload);
+        evreduction = Math.min(evload, wholeLoad - maxLoad);
         evload -= evreduction;
     }
     history.push({
