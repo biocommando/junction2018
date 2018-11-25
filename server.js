@@ -100,7 +100,8 @@ const calculateNonCompensatedPowerLevel = () => {
         balancingData: {
             heat: hreduction,
             ev: evreduction
-        }
+        },
+        free: maxLoad - wholeLoad
     });
 };
 
