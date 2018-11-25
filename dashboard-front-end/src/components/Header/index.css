@@ -2,5 +2,20 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 2em var(--edgePadding);
+  padding: 2em var(--edgePadding) 0;
+}
+
+.name-and-logo {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 1em;
+}
+
+.name-and-logo img {
+  height: 4em;
+  border-radius: 50%;
+}
+
+.name-and-logo h1 {
+  font-size: 3em;
 }

@@ -1,6 +1,6 @@
 .Body {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto-fill, min-content);
   justify-items: stretch;
   grid-gap: 1em;
@@ -13,9 +13,14 @@
   }
 }
 
+@media only screen and (max-width: 1200px){
+  .Body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .Body > * {
   background: #212121;
   border: 1px solid #141414;
   border-radius: 2px;
-  padding: 1em 1em 0 0;
 }

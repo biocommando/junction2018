@@ -13,6 +13,13 @@ body, h1, h5 {
 }
 
 :root {
-  --edgePadding: 10vw;
+  --edgePadding: calc(3vw + 15px);
   --mQuery-md: 736px;
+}
+
+.map-container{
+  padding: 0 1em 1em 1em;
+}
+.power-map{
+  max-width: 100%;
 }

@@ -6,7 +6,7 @@ import {
   AreaSeries,
 } from 'react-vis';
 import {timeFormat} from "d3-time-format";
-
+import './index.css';
 
 const StackedAreaChart = (props) => {
   const { dataSets, colors } = props;
@@ -14,7 +14,7 @@ const StackedAreaChart = (props) => {
   const yDomainMax = props.maxValue;
   const formatTime = timeFormat('%H:%M');
   return (
-    <div className='grid-container'>
+    <div className='chart-container'>
       <FlexibleWidthXYPlot
         stackBy="y"
         height={300}

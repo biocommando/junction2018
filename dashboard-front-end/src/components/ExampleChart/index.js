@@ -14,7 +14,7 @@ const ExampleChart = (props) => {
   const yDomainMax = props.maxValue;
 
   return (
-    <div className='grid-container'>
+    <div className='chart-container'>
       <FlexibleWidthXYPlot
         height={300}
         margin={{left: 75}}

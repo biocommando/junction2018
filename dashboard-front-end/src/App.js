@@ -5,6 +5,7 @@ import Body from './components/Body';
 import Footer from './components/Footer';
 import ExampleChart from './components/ExampleChart';
 import StackedAreaChart from './components/StackedAreaChart';
+import powerMap from './resources/map.png';
 const getData = callback => fetch('http://localhost:3001/api/history', { mode: 'cors' }).then(response => response.json().then(callback));
 const getParams = callback => fetch('http://localhost:3001/api/param', { mode: 'cors' }).then(response => response.json().then(callback));
 
@@ -71,21 +72,27 @@ class App extends Component {
         <Header />
         <Body>
           <div>
-            <div>Electrical Appliances</div>
+            <h4>Electrical Appliances</h4>
             <StackedAreaChart maxValue={maxLoad} dataSets={{appliances}} colors={colors} />
           </div>
 
           <div>
-            <div>Electrical Heating</div>
+            <h4>Electrical Heating</h4>
             <StackedAreaChart maxValue={maxLoad} dataSets={{heat, balancingHeat}} colors={colors} />
           </div>
           <div>
-            <div>Electrical Vehicle Charging</div>
+            <h4>Electrical Vehicle Charging</h4>
             <StackedAreaChart maxValue={maxLoad} dataSets={{ev, balancingEv}} colors={colors} />
           </div>
           <div>
-            <div>Total Power</div>
+            <h4>Total Power</h4>
             <StackedAreaChart maxValue={maxLoad} dataSets={{appliances, heat, ev}} colors={colors} />
+          </div>
+          <div>
+            <h4>Transformer Status</h4>
+            <div className='map-container'>
+              <img className='power-map' src={powerMap} alt="Power Grid Map"/>
+            </div>
           </div>
         </Body>
         <Footer />
