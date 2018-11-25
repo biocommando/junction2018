@@ -11,7 +11,7 @@ import './index.css';
 const StackedAreaChart = (props) => {
   const { dataSets, colors } = props;
   const axisStyle = {fill:'#d8d9da', fontSize:'0.9em'};
-  const yDomainMax = props.maxValue;
+  const yDomainMax = props.maxValue + 10;
   const formatTime = timeFormat('%H:%M');
   return (
     <div className='chart-container'>
