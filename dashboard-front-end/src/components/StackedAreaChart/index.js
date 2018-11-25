@@ -9,7 +9,7 @@ import {
 const StackedAreaChart = (props) => {
   const { dataSets, colors } = props;
   const axisStyle = {fill:'#d8d9da'};
-  const yDomainMax = 160
+  const yDomainMax = props.maxValue;
   return (
     <div className='grid-container'>
       <FlexibleWidthXYPlot
