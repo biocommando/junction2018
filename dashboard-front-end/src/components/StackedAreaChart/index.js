@@ -5,11 +5,14 @@ import {
   YAxis,
   AreaSeries,
 } from 'react-vis';
+import {timeFormat} from "d3-time-format";
+
 
 const StackedAreaChart = (props) => {
   const { dataSets, colors } = props;
-  const axisStyle = {fill:'#d8d9da'};
+  const axisStyle = {fill:'#d8d9da', fontSize:'0.9em'};
   const yDomainMax = props.maxValue;
+  const formatTime = timeFormat('%H:%M');
   return (
     <div className='grid-container'>
       <FlexibleWidthXYPlot
@@ -27,18 +30,10 @@ const StackedAreaChart = (props) => {
             opacity={0.4}
           />
         )}
-
-        {/* <AreaSeries
-          data={heat}
-          color={colors.heat}
-          opacity={0.4}
+        <XAxis
+          style={axisStyle}
+          tickFormat={function tickFormat(d){return formatTime(d)}}
         />
-        <AreaSeries
-          data={ev}
-          color={colors.ev}
-          opacity={0.4}
-        /> */}
-        <XAxis style={axisStyle}/>
         <YAxis style={axisStyle}/>
       </FlexibleWidthXYPlot>
     </div>

@@ -72,7 +72,7 @@ class App extends Component {
         <Body>
           <div>
             <div>Electrical Appliances</div>
-            <ExampleChart maxValue={maxLoad} myData={appliances} color={colors.appliances} />
+            <StackedAreaChart maxValue={maxLoad} dataSets={{appliances}} colors={colors} />
           </div>
 
           <div>
