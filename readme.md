@@ -25,3 +25,33 @@ In addition to smart load mitigation, the smart loads are connected to Fingrid�
 The business model for the customer, the grid operator, is to provide the hardware and software for the end-user for free. According to our calculations, the grid operator is saving 52,000€ throughout the lifespan of 20 years in the aforementioned 4 apartment buildings. That accounts to 520€ per apartment per year.
 
 The customer can access its datapoints through a web-based dashboard. Now, he can see in one screen where local bottlenecks are emerging, and which loads can be decreased while others are critical for the end-user. Using standardized protocols, the system is fully scalable and not necessary dependent on one hardware provider. This enables new services and flexible usage of data and resources.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app, both front-end and back-end.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### `npm simulate`
+
+Runs the app, both front-end and back-end, but in higher time frame for simulation purposes.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### `npm backend`
+
+Runs the back-end<br>
+@ [http://localhost:3001](http://localhost:3001).
+
+### `npm backend-simulate`
+
+Runs the back-end in simulation mode<br>
+@ [http://localhost:3001](http://localhost:3001).
+
+
+### `npm frontend`
+
+Runs the front-end<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

@@ -2,8 +2,11 @@
   "name": "peak-loading-distributor",
   "version": "0.0.0",
   "scripts": {
-    "start": "node server.js fastforwardto=2018-11-21_14:55",
-    "simulate": "node server.js"
+    "start": "node server.js fastforwardto=2018-11-21_14:55 | npm start --prefix dashboard-front-end",
+    "simulate": "node server.js | npm start --prefix dashboard-front-end",
+    "backend": "node server.js",
+    "backend-simulate": "node server.js",
+    "frontend": "npm start --prefix dashboard-front-end"
   },
   "dependencies": {
     "express": "^4.16.4",

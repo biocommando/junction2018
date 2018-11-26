@@ -3,7 +3,6 @@ import './App.css';
 import Header from './components/Header';
 import Body from './components/Body';
 import Footer from './components/Footer';
-import ExampleChart from './components/ExampleChart';
 import StackedAreaChart from './components/StackedAreaChart';
 import powerMap from './resources/map.png';
 const getData = callback => fetch('http://localhost:3001/api/history', { mode: 'cors' }).then(response => response.json().then(callback));
