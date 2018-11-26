@@ -1,4 +1,4 @@
-![Peakachu Logo](https://github.com/biocommando/junction2018/blob/master/peakachu.png)
+![Peakachu Logo](https://github.com/biocommando/junction2018/blob/master/images/peakachu.png)
 # Peakachu
 > Electrifying the local grid! - Pikachuuuuuuuuuuuuuuuuu!
 
@@ -18,7 +18,9 @@ We don't want the consumer to notice anything of this, all other electric applia
 -	Medium charge
 -	Fast charge
 
-If there is still load left, say, because there are not enough EVs plugged in, the indoor air temperature is raised to its optimal temperature. The charging of both vehicles and thermal storage is additionally dependent on the day-ahead electricity prices. As long as consumer needs are satisfied, it optimizes based on the current load capacity and the market price for electricity. If the system has spare load left, and no predictive event is coming, the remaining load capacity can be sold to other service providers. 
+If there is still load left, say, because there are not enough EVs plugged in, the indoor air temperature is raised to its optimal temperature. The charging of both vehicles and thermal storage is additionally dependent on the day-ahead electricity prices. As long as consumer needs are satisfied, it optimizes based on the current load capacity and the market price for electricity. If the system has spare load left, and no predictive event is coming, the remaining load capacity can be sold to other service providers.
+
+![PEAKachu Dashboard](https://github.com/biocommando/junction2018/blob/master/images/dashboard.png)
 
 In addition to smart load mitigation, the smart loads are connected to Fingrid’s Frequency Containment Reserve for Normal Operation (FCR-N) market. This market allows at a minimum of 100kW to participate on the market. As households no not have sufficiently controllable loads, they are aggregated through the provided cloud server. 
 
