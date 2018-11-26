@@ -35,23 +35,23 @@ In the project directory, you can run:
 Runs the app, both front-end and back-end.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm simulate`
+### `npm run simulate`
 
 Runs the app, both front-end and back-end, but in higher time frame for simulation purposes.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm backend`
+### `npm run backend`
 
 Runs the back-end<br>
 @ [http://localhost:3001](http://localhost:3001).
 
-### `npm backend-simulate`
+### `npm run backend-simulate`
 
 Runs the back-end in simulation mode<br>
 @ [http://localhost:3001](http://localhost:3001).
 
 
-### `npm frontend`
+### `npm run frontend`
 
 Runs the front-end<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
