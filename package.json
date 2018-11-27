@@ -4,12 +4,11 @@
   "scripts": {
     "start": "node server.js fastforwardto=2018-11-21_14:55 | npm start --prefix dashboard-front-end",
     "simulate": "node server.js | npm start --prefix dashboard-front-end",
-    "backend": "node server.js",
+    "backend": "node server.js fastforwardto=2018-11-21_14:55",
     "backend-simulate": "node server.js",
     "frontend": "npm start --prefix dashboard-front-end"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "firebase": "^5.5.9"
+    "express": "^4.16.4"
   }
 }
